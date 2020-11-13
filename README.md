@@ -1,6 +1,6 @@
 # Application logging and monitoring
 
-Demo project to demonstrate the ability to analyze application logs by using searching/aggregation/visualization capabilities bundled in [elastic stack](https://www.elastic.co).
+Sample project to demonstrate the ability to analyze application logs by using the searching/aggregation/visualization capabilities bundled into [elastic stack](https://www.elastic.co).
 
 ### Requirements
 
