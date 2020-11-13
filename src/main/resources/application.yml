@@ -1,0 +1,12 @@
+server:
+  tomcat:
+    accesslog:
+      directory: /var/log/application
+      enabled: true
+      pattern: '%{X-Forwarded-For}i %l %u %t "%r" %s %b "%{Referer}i" "%{User-Agent}i" "%{X-Correlation}o" "%{X-Amount}o" "%{X-Product}o" %D'
+      prefix: access
+      suffix: .log.json
+
+spring:
+  main:
+    banner-mode: off

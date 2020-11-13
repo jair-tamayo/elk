@@ -1,0 +1,3 @@
+ACCESS (%{IP:ip}(?<proxy>(, *%{IP})*)|-) - (%{DATA}|-) \[%{HTTPDATE:requesttime}\] "%{WORD:method} %{URIPATH:request}%{URIPARAM:params}? HTTP\/%{BASE10NUM}" %{NUMBER:response:int} (?:%{NUMBER:size:int}|-) "(?:-|%{DATA:referer})" "(?:-|%{DATA:user_agent})" "(?:-|%{DATA:X-Correlation})" "(?:-|%{DATA:X-Amount})" "(?:-|%{DATA:X-Product})" %{BASE10NUM:duration:int}
+CATALINA_DATESTAMP %{MONTH} %{MONTHDAY}, 20%{YEAR} %{HOUR}:?%{MINUTE}(?::?%{SECOND}) (?:AM|PM)
+TOMCAT_DATESTAMP 20%{YEAR}-%{MONTHNUM}-%{MONTHDAY} %{HOUR}:?%{MINUTE}(?::?%{SECOND}) %{ISO8601_TIMEZONE}

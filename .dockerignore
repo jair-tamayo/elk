@@ -1,0 +1,6 @@
+# ignore everything
+**
+
+# whitelist
+!docker
+!build/libs/elk*.jar

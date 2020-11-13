@@ -1,0 +1,69 @@
+version: '3'
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - elastic-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.9.3
+    container_name: kibana
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    networks:
+      - elastic-network
+    depends_on:
+      - elasticsearch
+      - logstash
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.9.3
+    container_name: logstash
+    environment:
+      - xpack.monitoring.enabled=false
+    volumes:
+      - logstash-volume:/usr/share/logstash/pipeline:ro
+      - tomcat-volume:/usr/share/logstash/patterns:ro
+      - application-volume:/var/log/application:ro
+    networks:
+      - elastic-network
+    depends_on:
+      - application
+      - elasticsearch
+
+  application:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: application
+    ports:
+      - 8080:8080
+    environment:
+      - TZ=America/Bogota
+    volumes:
+      - logstash-volume:/usr/share/logstash/pipeline:rw
+      - tomcat-volume:/usr/share/logstash/patterns:rw
+      - application-volume:/var/log/application:rw
+    networks:
+      - elastic-network
+
+volumes:
+  application-volume:
+    driver: local
+  tomcat-volume:
+    driver: local
+  logstash-volume:
+    driver: local
+
+networks:
+  elastic-network:
+    driver: bridge

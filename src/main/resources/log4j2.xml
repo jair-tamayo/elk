@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <RollingFile name="json" fileName="/var/log/application/application.log.json" filePattern="/var/log/application/application.%d{yyy-MM-dd}.log.json">
+            <JsonLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true" />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="json" />
+        </Root>
+    </Loggers>
+</Configuration>
