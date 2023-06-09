@@ -1,12 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.3.5.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.springframework.boot' version '2.7.11'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id 'java'
 }
 
 group = 'io.kt'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
 	mavenCentral()
@@ -15,15 +15,14 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
-	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
 
-configurations {
-	compile.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+configurations.configureEach {
+	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 }
 
 test {

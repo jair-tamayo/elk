@@ -6,12 +6,17 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public final class SampleService {
 
     private static final int ERROR_VALUE = 2;
     private static final int MAX_VALUE = 5;
+
+    private static final int SECONDS_VALUE = 3;
+
+    private static final long[] DURATIONS = {70, 150, 300, 500, 850, 1500, 2000};
 
     private static final String AMOUNT = "amount";
     private static final String PRODUCT = "product";
@@ -29,6 +34,12 @@ public final class SampleService {
             throw new NotFoundException(product);
         } else if (random.nextInt(MAX_VALUE) == ERROR_VALUE) {
             throw new IllegalStateException("Unexpected race condition");
+        } else if (random.nextInt(MAX_VALUE) == SECONDS_VALUE) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(DURATIONS[random.nextInt(DURATIONS.length) - 1]);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         return Map.of(AMOUNT, amount, PRODUCT, product);
